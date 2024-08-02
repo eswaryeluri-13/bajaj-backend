@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Import cors
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors()); // Use cors
 
-// User ID and other hardcoded details
 const USER_ID = "john_doe_17091999";
 const EMAIL = "john@xyz.com";
 const ROLL_NUMBER = "ABCD123";
@@ -16,11 +17,9 @@ const ROLL_NUMBER = "ABCD123";
 app.post('/bfhl', (req, res) => {
     const data = req.body.data || [];
 
-    // Separate numbers and alphabets
     const numbers = data.filter(item => !isNaN(item) && item.trim() !== '');
     const alphabets = data.filter(item => /^[a-zA-Z]$/.test(item));
 
-    // Find the highest alphabet
     const highestAlphabet = alphabets.length > 0 ? [alphabets.sort().pop()] : [];
 
     res.json({
@@ -34,20 +33,17 @@ app.post('/bfhl', (req, res) => {
     });
 });
 
-// GET /bfhl endpoint
 app.get('/bfhl', (req, res) => {
     res.json({
         operation_code: 1
     });
 });
 
-// Error handling
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
