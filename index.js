@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(bodyParser.json());
 
-// User details (for example purposes, use a dynamic approach in a real app)
 const USER_ID = "john_doe_17091999";
 const EMAIL = "john@xyz.com";
 const ROLL_NUMBER = "ABCD123";
@@ -47,7 +46,15 @@ app.post('/bfhl', (req, res) => {
 
 // GET /bfhl
 app.get('/bfhl', (req, res) => {
-    res.json({ operation_code: 1 });
+    res.json({
+        is_success: true,
+        user_id: USER_ID,
+        email: EMAIL,
+        roll_number: ROLL_NUMBER,
+        numbers: numbers,
+        alphabets: alphabets,
+        highest_alphabet: highestAlphabet
+    });
 });
 
 // Start the server
